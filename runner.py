@@ -28,13 +28,14 @@ Please:
 
 2. For any word that either:
    - Is not a real English word, OR
-   - Does not end with "{checker.SUFFIX}" OR
-   - Is a duplicate
+   - Does not end with "{checker.SUFFIX}"
 Replace it with a real English word that ends in "{checker.SUFFIX}"
 
-3. Show your evaluation process in <thinking> tags
+3. If a word is duplicated, replace the dups with real English words that end in "{checker.SUFFIX}"
 
-4. Provide the final list as:
+4. Show your evaluation process in <thinking> tags
+
+5. Provide the final list as:
    1. [word]
    2. [word]
    etc.
