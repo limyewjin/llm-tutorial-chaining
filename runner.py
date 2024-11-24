@@ -6,7 +6,7 @@ import time
 from statistics import mean, median, stdev
 from typing import Literal
 
-def run_chain(model_name: Literal["gemini", "anthropic", "openai"]) -> dict:
+def run_chain(model_name: Literal["anthropic", "gemini", "openai"]) -> dict:
     """Run a single chain for the specified model."""
     print(f"Running {model_name}")
     ask_func = getattr(api, f"ask_{model_name}")
