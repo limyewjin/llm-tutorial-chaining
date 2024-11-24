@@ -9,6 +9,7 @@ load_dotenv()
 # Anthropic model
 anthropic_client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 anthropic_model = "claude-3-5-haiku-latest"
+#anthropic_model = "claude-3-5-sonnet-latest"
 
 # Gemini model
 genai.configure(api_key=os.environ["GEMINI_API_KEY"])
@@ -20,16 +21,18 @@ gemini_generation_config = {
   "response_mime_type": "text/plain",
 }
 gemini_model="gemini-1.5-flash"
+#gemini_model="gemini-1.5-pro"
 
 # OpenAI model
 openai_client = OpenAI()
 openai_model = "gpt-4o-mini"
+#openai_model = "gpt-4o"
 
 def ask_anthropic(prompt, model=anthropic_model):
-  # Use the latest Claude 3.5 Sonnet model when testing.
   message = anthropic_client.messages.create(
-    model='claude-3-5-sonnet-latest',
+    model=model,
     max_tokens=1024,
+    temperature=0.0,
     messages=[
       {'role': 'user', 'content': prompt}
     ]
@@ -46,6 +49,7 @@ def ask_gemini(prompt, model=gemini_model):
 def ask_openai(prompt, model=openai_model):
   completion = openai_client.chat.completions.create(
     model=model,
+    temperature=0.0,
     messages=[
         {
             "role": "user",

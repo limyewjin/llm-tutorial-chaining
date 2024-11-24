@@ -12,51 +12,55 @@ def run_chain(model_name: Literal["gemini", "anthropic", "openai"]) -> dict:
     ask_func = getattr(api, f"ask_{model_name}")
     
     # Initial request
-    initial_list = ask_func(f'Name ten words that end with "{checker.SUFFIX}". Return as a list with each word on a new line labeled by 1., 2., and so on.')
+    initial_list = ask_func(f"""
+Name ten Standard English words that end with "{checker.SUFFIX}". Do not return uncommon words or spellings. Return as a list with each word on a new line labeled by 1., 2., and so on in <output> tag.
+
+Example with "ing":
+<output>
+1. singing
+2. wing
+...
+</output>
+""".strip())
     print(f"Initial list:\n{initial_list}")
     initial_count = checker.check_wordlist(initial_list)
     
     # Chained request
     prompt = f"""
-Given this list of ten words that supposedly end with "{checker.SUFFIX}":
+Check if each word in this list is a valid standard English word ending in "{checker.SUFFIX}". For invalid or duplicate words, replace with valid alternatives. Show your analysis by breaking down each word's ending.
+
+Input:
+<wordlist>
 {initial_list}
+</wordlist>
 
-Please:
-1. Evaluate each word and determine if it is:
-   - A real English word
-   - Correctly ending in "{checker.SUFFIX}"
-
-2. For any word that either:
-   - Is not a real English word, OR
-   - Does not end with "{checker.SUFFIX}"
-Replace it with a real English word that ends in "{checker.SUFFIX}"
-
-3. If a word is duplicated, replace the dups with real English words that end in "{checker.SUFFIX}"
-
-4. Show your evaluation process in <thinking> tags
-
-5. Provide the final list as:
-   1. [word]
-   2. [word]
-   etc.
-
-Example using words ending in "ing":
-Input: [singing, fakking, wing, run, ing, notaing]
 <thinking>
-- singing: real word ending in "ing" ✓
-- fakking: not a real word, replace with "walking"
-- wing: real word ending in "ing" ✓
-- run: doesn't end in "ing", replace with "running"
-- ing: doesn't end in "ing", replace with "spring"
-- notaing: not a real word, replace with "dancing"
+Check each word -> [preceding letters]-[last {len(checker.SUFFIX)} letters]:
+- Valid word + correct ending: keep  
+- Invalid word or wrong ending: replace
 </thinking>
 
+<output>
+1. [final word]
+2. [final word]
+...
+</output>
+
+Example with "ing":
+Input: [singing, fakking, wing]
+<thinking>
+- singing -> sing-ing: valid ✓
+- stink -> st-ink: ink != ing, use "sting"
+- fakking -> fakk-ing: not real, use "walking"  
+- wing -> w-ing: valid ✓
+</thinking>
+
+<output>
 1. singing
-2. walking
-3. wing
-4. running
-5. spring
-6. dancing
+2. sting
+3. walking
+4. wing
+</output>
     """.strip()
     
     chained_list = ask_func(prompt)
@@ -126,7 +130,7 @@ def run_comparison(iterations: int = 10, delay: float = 1.0):
     return results, stats
 
 if __name__ == "__main__":
-    results, stats = run_comparison(iterations=5, delay=1.0)
+    results, stats = run_comparison(iterations=10, delay=1.0)
     
     print("\nResults Summary:")
     for model, model_stats in stats.items():
