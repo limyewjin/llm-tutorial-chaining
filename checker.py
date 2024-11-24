@@ -23,12 +23,23 @@ Follow these steps to complete the task:
    - This is *not* a suffix check, you just separate the last {len(SUFFIX)} letters to help check if it ends with "{SUFFIX}".
 7. Finally if "{SUFFIX}" is a real English word then the word "{SUFFIX}" itself is allowed.
 
+<example>
+Example using "can" as the letters we are looking for words to end with:
+- "American" is a real word ending with "can", so it would not be included in the output list.
+- "Fakecan" is not a real word (even though it ends with "can"), so it would be included in the output list.
+- "Pelican" is a real word ending with "can", so it would not be included in the output list.
+- "Canister" is a real word but doesn't end with "can", so it would be included in the output list.
+</example>
+
 Provide your answer in the following format:
 <thinking>
 1. Word 1 -> [preceding letters]-[last {len(SUFFIX)} letters]
 2. Word 2 -> [preceding letters]-[last {len(SUFFIX)} letters]
 ...
 </thinking>
+<explanation>
+[Explanation of choices]
+</explanation>
 <fake_words>
 - [Word 1]
 - [Word 2]
@@ -37,14 +48,6 @@ Provide your answer in the following format:
 
 If all words in the list are real words ending with "{SUFFIX}", output an empty tag:
 <fake_words></fake_words>
-
-<example>
-Example using "can" as the letters we are looking for words to end with:
-- "American" is a real word ending with "can", so it would not be included in the output list.
-- "Fakecan" is not a real word (even though it ends with "can"), so it would be included in the output list.
-- "Pelican" is a real word ending with "can", so it would not be included in the output list.
-- "Canister" is a real word but doesn't end with "can", so it would be included in the output list.
-</example>
 
 Note: Be sure to consider case sensitivity. Treat words as case-insensitive when determining if they are real words or if they end with "{SUFFIX}".
 
