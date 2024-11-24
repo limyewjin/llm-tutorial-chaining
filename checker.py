@@ -1,7 +1,7 @@
 import api
 import re
 
-SUFFIX = "tan"
+SUFFIX = "can"
 
 def check_wordlist(wordlist):
   response = api.ask_anthropic(f"""
@@ -15,7 +15,7 @@ Here is the list of words:
 Follow these steps to complete the task:
 
 1. Process each word in the list.
-2. For each word, determine if it is a real English word that ends with "{SUFFIX}".
+2. For each word, determine if it is a real English word that ends with "{SUFFIX}". Only check for this constraint of the ending letters and do not be concerned with compound word or etymology.
 3. If a word is not a real English word or does not end with "{SUFFIX}", include it in your output list.
 4. If a word is a real English word and ends with "{SUFFIX}", do not include it in your output list.
 5. If a word is duplicate, only count it once and list it as a "fake word" in your output list labeled as "(duplicate)".
