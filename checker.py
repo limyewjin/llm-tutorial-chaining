@@ -27,7 +27,7 @@ Process the given list and provide your output as instructed.
 
   output = re.search(r'<output>(.*?)</output>', response, re.DOTALL).group(1).strip()
   words = [word.strip() for word in output.split('\n') if word.strip() != ""]
-  incorrect = [word for word in words if not word.endswith(SUFFIX)]
+  incorrect = [word for word in words if not word.lower().endswith(SUFFIX.lower())]
   print(f'==>Number of incorrect words found: {len(incorrect)}')
 
   return len(incorrect)
