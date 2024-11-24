@@ -19,13 +19,13 @@ Follow these steps to complete the task:
 3. If a word is not a real English word or does not end with "{SUFFIX}", include it in your output list.
 4. If a word is a real English word and ends with "{SUFFIX}", do not include it in your output list.
 5. If a word is duplicate, only count it once and list it as a "fake word" in your output list labeled as "(duplicate)".
-6. Do some thinking for each word by separating the last three letters from each word and reflect if it's "{SUFFIX}". (Example using "ing": "singing" -> "sing-ing")
+6. Do some thinking for each word by separating the last {len(SUFFIX)} letters from each word and reflect if it's "{SUFFIX}". (Example using "ing": "singing" -> "sing-ing")
 7. Note that if "{SUFFIX}" is a real English word then the word "{SUFFIX}" itself is allowed.
 
 Provide your answer in the following format:
 <thinking>
-1. Word 1 -> prefix-suffix
-2. Word 2 -> prefix-suffix
+1. Word 1 -> prefix-[last {len(SUFFIX)} letters]
+2. Word 2 -> prefix-[last {len(SUFFIX)} letters]
 ...
 </thinking>
 <fake_words>
@@ -37,13 +37,13 @@ Provide your answer in the following format:
 If all words in the list are real words ending with "{SUFFIX}", output an empty tag:
 <fake_words></fake_words>
 
-Examples using "can" as a suffix:
-<examples>
+<example>
+Example using "can" as the letters we are looking for words to end with:
 - "American" is a real word ending with "can", so it would not be included in the output list.
 - "Fakecan" is not a real word (even though it ends with "can"), so it would be included in the output list.
 - "Pelican" is a real word ending with "can", so it would not be included in the output list.
 - "Canister" is a real word but doesn't end with "can", so it would be included in the output list.
-</examples>
+</example>
 
 Note: Be sure to consider case sensitivity. Treat words as case-insensitive when determining if they are real words or if they end with "{SUFFIX}".
 
