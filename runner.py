@@ -12,7 +12,7 @@ def run_chain(model_name: Literal["gemini", "anthropic", "openai"]) -> dict:
     ask_func = getattr(api, f"ask_{model_name}")
     
     # Initial request
-    initial_list = ask_func(f'Name ten words as you can that end with "{checker.SUFFIX}". Return as a list with each word on a new line labeled by 1., 2., and so on.')
+    initial_list = ask_func(f'Name ten words that end with "{checker.SUFFIX}". Return as a list with each word on a new line labeled by 1., 2., and so on.')
     print(f"Initial list:\n{initial_list}")
     initial_count = checker.check_wordlist(initial_list)
     
