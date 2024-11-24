@@ -1,7 +1,7 @@
 import api
 import re
 
-SUFFIX = "can"
+SUFFIX = "acy"
 
 def check_wordlist(wordlist):
   response = api.ask_anthropic(f"""
