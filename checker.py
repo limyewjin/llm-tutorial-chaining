@@ -20,12 +20,13 @@ Follow these steps to complete the task:
 4. If a word is a real English word and ends with "{SUFFIX}", do not include it in your output list.
 5. If a word is duplicate, only count it once and list it as a "fake word" in your output list labeled as "(duplicate)".
 6. Do some thinking for each word by separating the last {len(SUFFIX)} letters from each word and reflect if it's "{SUFFIX}". (Example using "ing": "singing" -> "sing-ing")
-7. Note that if "{SUFFIX}" is a real English word then the word "{SUFFIX}" itself is allowed.
+   - This is *not* a suffix check, you just separate the last {len(SUFFIX)} letters to help check if it ends with "{SUFFIX}".
+7. Finally if "{SUFFIX}" is a real English word then the word "{SUFFIX}" itself is allowed.
 
 Provide your answer in the following format:
 <thinking>
-1. Word 1 -> prefix-[last {len(SUFFIX)} letters]
-2. Word 2 -> prefix-[last {len(SUFFIX)} letters]
+1. Word 1 -> [preceding letters]-[last {len(SUFFIX)} letters]
+2. Word 2 -> [preceding letters]-[last {len(SUFFIX)} letters]
 ...
 </thinking>
 <fake_words>
