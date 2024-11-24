@@ -28,7 +28,8 @@ Please:
 
 2. For any word that either:
    - Is not a real English word, OR
-   - Does not end with "{checker.SUFFIX}"
+   - Does not end with "{checker.SUFFIX}" OR
+   - Is a duplicate
 Replace it with a real English word that ends in "{checker.SUFFIX}"
 
 3. Show your evaluation process in <thinking> tags
@@ -124,7 +125,7 @@ def run_comparison(iterations: int = 10, delay: float = 1.0):
     return results, stats
 
 if __name__ == "__main__":
-    results, stats = run_comparison(iterations=1, delay=1.0)
+    results, stats = run_comparison(iterations=5, delay=1.0)
     
     print("\nResults Summary:")
     for model, model_stats in stats.items():
