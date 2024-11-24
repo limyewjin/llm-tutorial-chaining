@@ -25,10 +25,10 @@ Follow these steps to complete the task:
 
 <example>
 Example using "can" as the letters we are looking for words to end with:
-- "American" is a real word ending with "can", so it would not be included in the output list.
-- "Fakecan" is not a real word (even though it ends with "can"), so it would be included in the output list.
-- "Pelican" is a real word ending with "can", so it would not be included in the output list.
-- "Canister" is a real word but doesn't end with "can", so it would be included in the output list.
+- "American" -> "Ameri-can" is a real word ending with "can", so it would not be included in the output list.
+- "Fakecan" -> "Fake-can" is not a real word (even though it ends with "can"), so it would be included in the output list.
+- "Pelican" -> "Peli-can" is a real word ending with "can", so it would not be included in the output list.
+- "Canister" -> "Canis-ter" is a real word but doesn't end with "can", so it would be included in the output list.
 </example>
 
 Provide your answer in the following format:
