@@ -12,18 +12,49 @@ def run_chain(model_name: Literal["gemini", "anthropic", "openai"]) -> dict:
     ask_func = getattr(api, f"ask_{model_name}")
     
     # Initial request
-    initial_list = ask_func('Name ten words as you can that end with "can". Return as a list with each word on a new line labeled by 1., 2., and so on.')
+    initial_list = ask_func(f'Name ten words as you can that end with "{checker.SUFFIX}". Return as a list with each word on a new line labeled by 1., 2., and so on.')
     print(f"Initial list:\n{initial_list}")
     initial_count = checker.check_wordlist(initial_list)
     
     # Chained request
     prompt = f"""
-    Here are ten words that end with "can":
-    {initial_list}
+Given this list of ten words that supposedly end with "{checker.SUFFIX}":
+{initial_list}
 
-    Replace all words that do not end with "can" or are not real words with real words that end with "can". Place your thinking in <thinking> tag.
+Please:
+1. Evaluate each word and determine if it is:
+   - A real English word
+   - Correctly ending in "{checker.SUFFIX}"
 
-    Finally, return as a new list with only the replaced words (or original if correct) on a new line labeled by 1., 2., and so on.
+2. For any word that either:
+   - Is not a real English word, OR
+   - Does not end with "{checker.SUFFIX}"
+Replace it with a real English word that ends in "{checker.SUFFIX}"
+
+3. Show your evaluation process in <thinking> tags
+
+4. Provide the final list as:
+   1. [word]
+   2. [word]
+   etc.
+
+Example using words ending in "ing":
+Input: [singing, fakking, wing, run, ing, notaing]
+<thinking>
+- singing: real word ending in "ing" ✓
+- fakking: not a real word, replace with "walking"
+- wing: real word ending in "ing" ✓
+- run: doesn't end in "ing", replace with "running"
+- ing: doesn't end in "ing", replace with "spring"
+- notaing: not a real word, replace with "dancing"
+</thinking>
+
+1. singing
+2. walking
+3. wing
+4. running
+5. spring
+6. dancing
     """.strip()
     
     chained_list = ask_func(prompt)
@@ -93,7 +124,7 @@ def run_comparison(iterations: int = 10, delay: float = 1.0):
     return results, stats
 
 if __name__ == "__main__":
-    results, stats = run_comparison(iterations=10, delay=1.0)
+    results, stats = run_comparison(iterations=1, delay=1.0)
     
     print("\nResults Summary:")
     for model, model_stats in stats.items():
