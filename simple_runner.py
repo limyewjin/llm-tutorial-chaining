@@ -1,19 +1,56 @@
 import api
 import checker
 
-response = api.ask_gemini(f'Name ten words as you can that end with "{checker.SUFFIX}". Return as a list with each word on a new line labeled by 1., 2., and so on.')
+response = api.ask_gemini(f"""
+Name ten Standard English words that end with "{checker.SUFFIX}". Do not return uncommon words or spellings. Return as a list with each word on a new line labeled by 1., 2., and so on in <output> tag.
+
+Example with "ing":
+<output>
+1. singing
+2. wing
+...
+</output>
+""".strip())
 
 initial_list = response
 print(f"Initial response:\n{initial_list}")
 original_count = checker.check_wordlist(initial_list)
 
 response = api.ask_gemini(f"""
-Here are ten words that end with "{checker.SUFFIX}":
+Check if each word in this list is a valid standard English word ending in "{checker.SUFFIX}". For invalid or duplicate words, replace with valid alternatives. Show your analysis by breaking down each word's ending.
+
+Input:
+<wordlist>
 {initial_list}
+</wordlist>
 
-Replace all words that do end with "{checker.SUFFIX}" or are not real words with real words that end with "{checker.SUFFIX}". Place your thinking in <thinking> tag.
+<thinking>
+Check each word -> [preceding letters]-[last {len(checker.SUFFIX)} letters]:
+- Valid word + correct ending: keep  
+- Invalid word or wrong ending: replace
+</thinking>
 
-Finally, return as a new list with only the replaced words (or original if correct) on a new line labeled by 1., 2., and so on.
+<output>
+1. [final word]
+2. [final word]
+...
+</output>
+
+Example with "ing":
+Input: [singing, fakking, wing]
+<thinking>
+- singing -> sing-ing: valid ✓
+- stink -> st-ink: ink != ing, use "sting"
+- fakking -> fakk-ing: not real, use "walking"  
+- wing -> w-ing: valid ✓
+</thinking>
+
+<output>
+1. singing
+2. sting
+3. walking
+4. wing
+</output>
 """.strip())
 
 chained_list = response
