@@ -1,6 +1,20 @@
 # Prompt Chaining Test
 
-This is a simple test to demonstrate the effectiveness of prompt chaining across multiple LLMs. In this test, we ask models for the list of words ending in "tan", and then chain prompt the same models to self-reflect and improve the list. The framework compares how well different models can enhance their responses when given a chance to review and correct their initial output. Results are saved to CSV files for analysis, tracking both the initial response quality and the improvement achieved through chaining.
+As the saying goes, "Writing is rewriting." The same applies to LLMs! Just like how we ask humans to double-check their work, we can prompt LLMs to review and improve their responses.
+
+Here's a simple conceptual example:
+
+1. First prompt: "List 10 words ending in 'ab'"
+2. Chain prompt: "Now check if each word is valid. Show your analysis and replace any invalid ones."
+
+This simple chaining technique can lead to improved results. The key is asking the model to:
+- Show its reasoning
+- Break down its analysis
+- Replace incorrect answers
+
+## Setup
+
+In this test, we ask models for the list of words ending in "ab", and then chain prompt the same models to self-reflect and improve the list. The framework compares how well different models can enhance their responses when given a chance to review and correct their initial output. Results are saved to CSV files for analysis, tracking both the initial response quality and the improvement achieved through chaining.
 
 ## Results
 
